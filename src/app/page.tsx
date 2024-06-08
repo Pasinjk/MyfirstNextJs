@@ -4,10 +4,8 @@ import Link from "next/link";
 import { UserOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { Button, Flex, message } from "antd";
-import { text } from "stream/consumers";
 import { clearScreenDown } from "readline";
-import buttonLogin from "@/component/button/main.login";
-import { use } from "react";
+import { MouseEventHandler, use } from "react";
 
 type FieldType = {
   username?: string;
@@ -15,26 +13,26 @@ type FieldType = {
 };
 
 export default function Page() {
-  const loginButtonClick = () => {
-    document.getElementById("Cilck")
-      const user = document.getElementById("username")
-      const password = document.getElementById("password")
-    if (user){ 
-      info()
-    }
-    
-  }
+
+  const loginButtonClick = (values:string,event: any) => {
+    console.log(values,event)
+    let InputUsername = (document.getElementById("username") as HTMLInputElement).value
+    let InputPassword = (document.getElementById("password") as HTMLInputElement).value
+    console.log(InputUsername)
+    console.log(InputPassword)
+  };
+  
   const [messageApi, contextHolder] = message.useMessage();
   const info = () => {
-    messageApi.info('Hi user');
+    messageApi.info("Hi user");
   };
 
   return (
     <main>
       <div className="div_username">
         <Input
-          type="text"
           id="username"
+          type="text"
           size="large"
           placeholder="username"
           prefix={<UserOutlined />}
@@ -42,20 +40,18 @@ export default function Page() {
       </div>
       <div>
         <div className="div_username">
-          <Input
-            type="text"
-            id="password"
-            size="large"
-            placeholder="password"
-          />
+          <Input id="password" type="text" size="large" placeholder="password" />
           <a href="/register" className="pass_forget">
             Forget password??
           </a>
         </div>
       </div>
       <div className="button_login">
-      {contextHolder}
-      <Button id="Cilck" onClick={loginButtonClick}> login </Button>
+        {contextHolder}
+        <Button id="Cilck" onClick={(e) => loginButtonClick('test',e)}>
+          {" "}
+          login{" "}
+        </Button>
       </div>
     </main>
   );
