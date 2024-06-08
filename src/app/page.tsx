@@ -24,7 +24,6 @@ export default function Page() {
       info();
       console.log(InputPassword);
     } else{
-      info
       console.log("yeahs")
     }
   };
