@@ -13,15 +13,22 @@ type FieldType = {
 };
 
 export default function Page() {
-
-  const loginButtonClick = (values:string,event: any) => {
-    console.log(values,event)
-    let InputUsername = (document.getElementById("username") as HTMLInputElement).value
-    let InputPassword = (document.getElementById("password") as HTMLInputElement).value
-    console.log(InputUsername)
-    console.log(InputPassword)
+  const loginButtonClick = (values: string) => {
+    console.log(values, event);
+    let InputUsername = (document.getElementById("username") as HTMLInputElement).value;
+    let InputPassword = (document.getElementById("password") as HTMLInputElement).value;
+    if (InputUsername === "") {
+      info();
+      console.log(InputUsername);
+    } else if (InputPassword === "") {
+      info();
+      console.log(InputPassword);
+    } else{
+      info
+      console.log("yeahs")
+    }
   };
-  
+
   const [messageApi, contextHolder] = message.useMessage();
   const info = () => {
     messageApi.info("Hi user");
@@ -40,7 +47,12 @@ export default function Page() {
       </div>
       <div>
         <div className="div_username">
-          <Input id="password" type="text" size="large" placeholder="password" />
+          <Input
+            id="password"
+            type="text"
+            size="large"
+            placeholder="password"
+          />
           <a href="/register" className="pass_forget">
             Forget password??
           </a>
@@ -48,7 +60,7 @@ export default function Page() {
       </div>
       <div className="button_login">
         {contextHolder}
-        <Button id="Cilck" onClick={(e) => loginButtonClick('test',e)}>
+        <Button id="Cilck" onClick={ () => loginButtonClick("username$password")}>
           {" "}
           login{" "}
         </Button>
