@@ -1,0 +1,40 @@
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.nav {
+  background-color:lightcoral;
+  text-align:center;
+  padding: 10px;
+}
+
+.div_username {
+  width: fit-content;
+  margin-inline-start: auto;
+  margin-inline-end:auto ;
+  max-width: 100%;
+  margin: 1rem;
+}
+
+.button_login {
+  width: fit-content;
+  margin: 1rem;
+  margin-inline-start: auto;
+  margin-inline-end:auto ;
+}
+
+.pass_forget {
+  text-decoration: none;
+  margin: 1rem;
+  
+}
