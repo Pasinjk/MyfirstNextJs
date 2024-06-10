@@ -6,19 +6,14 @@ import { Button, notification, Popconfirm } from "antd";
 import React, { useState } from "react";
 import { massage } from "@/functions/info";
 
-type FieldType = {
-  username?: string;
-  password?: string;
-};
-
 export default function Page() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const loginButtonClick = () => {
-    let InputUsername = (
+    const InputUsername = (
       document.getElementById("username") as HTMLInputElement
     ).value;
-    let InputPassword = (
+    const InputPassword = (
       document.getElementById("password") as HTMLInputElement
     ).value;
     if (InputUsername === "" && InputPassword === "") {
@@ -29,19 +24,17 @@ export default function Page() {
       massage("please fill password", "warning");
     } else {
       if (InputUsername === "admin" && InputPassword === "123456")
-        openNotification("Success");
+        openNotification("Login Success");
       else {
-        openNotification("Fail");
+        openNotification("Login Fail");
       }
     }
   };
 
-  const Context = React.createContext({ name });
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (massage: string) => {
     api.info({
-      message: "Login",
-      description: massage,
+      message: massage,
     });
   };
 
