@@ -2,7 +2,7 @@ import { message } from "antd";
 
 type NotificationType = "info" | "success" | "error" | "warning";
 
-export const noti = (
+export const massage = (
   content: string,
   type: NotificationType = "info"
 ): void => {

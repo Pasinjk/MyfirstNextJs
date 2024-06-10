@@ -1,6 +1,7 @@
 
 * {
-  box-sizing: border-box;
+  box-sizing: 
+  border-box;
   padding: 0;
   margin: 0;
 }
@@ -11,6 +12,11 @@ body {
   height: 100vh;
   overflow-x: hidden;
 }
+.container {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
 
 .nav {
   background-color:lightcoral;
@@ -18,7 +24,7 @@ body {
   padding: 10px;
 }
 
-.div_username {
+.loginFill {
   width: fit-content;
   margin-inline-start: auto;
   margin-inline-end:auto ;
@@ -31,6 +37,11 @@ body {
   margin: 1rem;
   margin-inline-start: auto;
   margin-inline-end:auto ;
+}
+
+.popclear {
+  width: fit-content;
+
 }
 
 .pass_forget {
