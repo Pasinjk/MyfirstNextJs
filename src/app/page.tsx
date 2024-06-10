@@ -61,19 +61,23 @@ export default function Page() {
 
   return (
     <main>
-      <div className="container">
-        <div className="loginFill">
-          <Input
-            id="username"
-            type="text"
-            size="large"
-            value={username}
-            placeholder="username"
-            prefix={<UserOutlined />}
-            onChange={handleChangeUser}
-          />
-        </div>
-        <div>
+      <div className="flex-contain">
+        <div className="box"></div>
+        <div className="box"></div>
+        <div className="box"></div>
+        <div className="box"></div>
+        <div className="container">
+          <div className="loginFill">
+            <Input
+              id="username"
+              type="text"
+              size="large"
+              value={username}
+              placeholder="username"
+              prefix={<UserOutlined />}
+              onChange={handleChangeUser}
+            />
+          </div>
           <div className="loginFill">
             <Input
               id="password"
@@ -87,22 +91,33 @@ export default function Page() {
               Forget password??
             </a>
           </div>
+          <div className="button_login">
+            {contextHolder}
+            <Popconfirm
+              title="Clear All\"
+              description="Are you sure to clear all?"
+              onConfirm={clearInput}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button danger className="clearbutton">
+                clear
+              </Button>
+            </Popconfirm>
+            <Button
+              type="primary"
+              className="loginbutton"
+              id="Cilck"
+              onClick={onButtonClick}
+            >
+              &nbsp;login&nbsp;
+            </Button>
+          </div>
         </div>
-        <div className="button_login">
-          {contextHolder}
-          <Popconfirm
-            title="Delete the task"
-            description="Are you sure to clear all?"
-            onConfirm={clearInput}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button danger>clear</Button>
-          </Popconfirm>
-          <Button id="Cilck" onClick={onButtonClick}>
-            &nbsp;login&nbsp;
-          </Button>
-        </div>
+        <div className="box"></div>
+        <div className="box"></div>
+        <div className="box"></div>
+        <div className="box"></div>
       </div>
     </main>
   );
