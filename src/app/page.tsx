@@ -1,37 +1,76 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
+
 import { UserOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import { Button, Flex, message } from "antd";
-import { clearScreenDown } from "readline";
-import { MouseEventHandler, use } from "react";
+import { Button, Flex, message, Divider, notification, Space ,Popconfirm} from "antd";
+
+import React, { useMemo, useState } from "react";
+import { noti } from "@/functions/info";
+
+import type { NotificationArgsProps } from "antd";
 
 type FieldType = {
   username?: string;
   password?: string;
 };
+type NotificationPlacement = NotificationArgsProps["placement"];
+const Context = React.createContext({ name: "Default" });
 
 export default function Page() {
-  const loginButtonClick = (values: string) => {
-    console.log(values, event);
-    let InputUsername = (document.getElementById("username") as HTMLInputElement).value;
-    let InputPassword = (document.getElementById("password") as HTMLInputElement).value;
-    if (InputUsername === "") {
-      info();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const loginButtonClick = () => {
+    let InputUsername = (
+      document.getElementById("username") as HTMLInputElement
+    ).value;
+    let InputPassword = (
+      document.getElementById("password") as HTMLInputElement
+    ).value;
+    if (InputUsername === "" && InputPassword === "") {
+      noti("please fill Username&Password", "warning");
       console.log(InputUsername);
+    } else if (InputUsername === "") {
+      noti("please fill username", "warning");
     } else if (InputPassword === "") {
-      info();
+      noti("please fill password", "warning");
       console.log(InputPassword);
-    } else{
-      console.log("yeahs")
+    } else {
+      if (InputUsername === "admin" && InputPassword === "123456")
+        console.log("hello admin");
+      else {
+        console.log("Wrong Username & password");
+      }
     }
   };
 
-  const [messageApi, contextHolder] = message.useMessage();
-  const info = () => {
-    messageApi.info("Hi user");
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (placement: NotificationPlacement) => {
+    console.log("working");
+    api.info({
+      message: `Notification ${placement}`,
+      description: (
+        <Context.Consumer>{({ name }) => `Hello, ${name}!`}</Context.Consumer>
+      ),
+      placement,
+    });
   };
+
+  const onButtonClick = () => {
+    loginButtonClick();
+    openNotification("bottomRight");
+  };
+  const handleChangeUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setUsername(e.target.value);
+  };
+  const handleChangePass = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setPassword(e.target.value);
+  };
+  const clearInput = () => {
+    setUsername('');
+    setPassword('');
+  }
 
   return (
     <main>
@@ -40,8 +79,10 @@ export default function Page() {
           id="username"
           type="text"
           size="large"
+          value={username}
           placeholder="username"
           prefix={<UserOutlined />}
+          onChange={handleChangeUser}
         />
       </div>
       <div>
@@ -50,7 +91,9 @@ export default function Page() {
             id="password"
             type="text"
             size="large"
+            value={password}
             placeholder="password"
+            onChange={handleChangePass}
           />
           <a href="/register" className="pass_forget">
             Forget password??
@@ -59,11 +102,20 @@ export default function Page() {
       </div>
       <div className="button_login">
         {contextHolder}
-        <Button id="Cilck" onClick={ () => loginButtonClick("username$password")}>
-          {" "}
-          login{" "}
+        <Button id="Cilck" onClick={onButtonClick}>
+          &nbsp; login&nbsp;
         </Button>
       </div>
+      <Popconfirm
+        title="Are you sure you want to clear the password?"
+        onConfirm={clearInput}
+        okText="Yes"
+        cancelText="No"
+      >
+        <Button type="primary" style={{ marginLeft: "10px" }}>
+          Clear Password
+        </Button>
+      </Popconfirm>
     </main>
   );
 }
