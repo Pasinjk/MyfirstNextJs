@@ -1,8 +1,10 @@
 "use client";
 // import React, { useState } from "react";
-import { Button, Form, Input, notification } from "antd";
+import { Button, Form, Input, notification, Popconfirm } from "antd";
 import { massage } from "@/functions/info";
 import type { FormProps } from "antd";
+import { useForm } from "antd/es/form/Form";
+import { useState } from "react";
 
 type FieldType = {
   username?: string;
@@ -10,7 +12,12 @@ type FieldType = {
 };
 
 export default function Page() {
+  const [form] = useForm();
+  // const [username, setUsername] = useState<string>("");
+  // const [password, setPassword] = useState<string>("");
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+    console.log("onFinish Values: ", values);
+    console.log("formValue: ", form.getFieldsValue(true));
     if (values.username === "admin") {
       if (values.password === "123456") {
         openNotification("Login Success", "Hi admin");
@@ -45,6 +52,14 @@ export default function Page() {
       description: desriptmassage,
     });
   };
+  const clearInput = () => {
+    // form.setFieldValue("password", null);
+    form.resetFields();
+    // setUsername("");
+  };
+  // const onValueChange = (value: any) => {
+  //   console.log(value);
+  // };
 
   return (
     <main>
@@ -55,6 +70,7 @@ export default function Page() {
         <div className="box"></div>
         <div className="container">
           <Form
+            form={form}
             name="basic"
             labelCol={{
               span: 8,
@@ -72,6 +88,7 @@ export default function Page() {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             className="loginFill"
+            // onChange={onValueChange}
           >
             <Form.Item
               label="Username"
@@ -82,8 +99,13 @@ export default function Page() {
                   message: "Please input your username!",
                 },
               ]}
+              // initialValue={username}
             >
-              <Input />
+              <Input
+                // value={username}
+                // onChange={(e) => setUsername(e.target.value)}
+                // onChange={handleChangeUser}
+              />
             </Form.Item>
 
             <Form.Item
@@ -96,7 +118,9 @@ export default function Page() {
                 },
               ]}
             >
-              <Input.Password />
+              <Input.Password
+              // onChange={handleChangePass}
+              />
             </Form.Item>
 
             <Form.Item
@@ -109,6 +133,17 @@ export default function Page() {
                 {contextHolder}
                 Submit
               </Button>
+              <Popconfirm
+                title="Clear All"
+                description="Are you sure to clear all?"
+                onConfirm={() => clearInput()}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button danger className="clearbutton">
+                  clear
+                </Button>
+              </Popconfirm>
             </Form.Item>
           </Form>
         </div>
