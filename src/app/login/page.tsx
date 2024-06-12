@@ -1,10 +1,9 @@
 "use client";
-// import React, { useState } from "react";
 import { Button, Form, Input, notification, Popconfirm } from "antd";
 import { massage } from "@/functions/info";
 import type { FormProps } from "antd";
 import { useForm } from "antd/es/form/Form";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type FieldType = {
   username?: string;
@@ -12,12 +11,20 @@ type FieldType = {
 };
 
 export default function Page() {
+  // const MyForm =() => {
   const [form] = useForm();
-  // const [username, setUsername] = useState<string>("");
-  // const [password, setPassword] = useState<string>("");
+  const searchParams = useSearchParams();
+  const searchUser = searchParams.get("username");
+  const searchPass = searchParams.get("password");
+  //   form.setFieldsValue({
+  // username: searchUser,
+  // password: searchPass,
+  //   })
+  // }
+
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    console.log("onFinish Values: ", values);
-    console.log("formValue: ", form.getFieldsValue(true));
+    // console.log("onFinish Values: ", values);
+    // console.log("formValue: ", form.getFieldsValue(true));
     if (values.username === "admin") {
       if (values.password === "123456") {
         openNotification("Login Success", "Hi admin");
@@ -53,14 +60,12 @@ export default function Page() {
     });
   };
   const clearInput = () => {
-    // form.setFieldValue("password", null);
     form.resetFields();
-    // setUsername("");
   };
-  // const onValueChange = (value: any) => {
-  //   console.log(value);
-  // };
-
+  form.setFieldsValue({
+    username: searchUser,
+    password: searchPass,
+  });
   return (
     <main>
       <div className="flex-contain">
@@ -88,7 +93,6 @@ export default function Page() {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             className="loginFill"
-            // onChange={onValueChange}
           >
             <Form.Item
               label="Username"
@@ -99,13 +103,8 @@ export default function Page() {
                   message: "Please input your username!",
                 },
               ]}
-              // initialValue={username}
             >
-              <Input
-                // value={username}
-                // onChange={(e) => setUsername(e.target.value)}
-                // onChange={handleChangeUser}
-              />
+              <Input />
             </Form.Item>
 
             <Form.Item
@@ -118,9 +117,7 @@ export default function Page() {
                 },
               ]}
             >
-              <Input.Password
-              // onChange={handleChangePass}
-              />
+              <Input.Password />
             </Form.Item>
 
             <Form.Item
