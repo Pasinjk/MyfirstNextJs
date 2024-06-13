@@ -1,6 +1,6 @@
-
-
 /// useSearchParams to recive value form id ///
+
+
 
 // "use client";
 // import { useSearchParams } from "next/navigation";
@@ -9,8 +9,8 @@
 //   const searchParams = useSearchParams();
 //   const search = searchParams.get("search");
 
-//   // URL -> `/dashboard?search=my-project`
-//   // `search` -> 'my-project'
+// URL -> `/dashboard?search=my-project`
+// `search` -> 'my-project'
 //   return <>Search: {search}</>;
 // }
 
@@ -18,6 +18,8 @@
 
 
 /// Router link to next page ///
+
+
 
 
 // "use client";
@@ -42,4 +44,3 @@
 // };
 
 // export default Page;
-

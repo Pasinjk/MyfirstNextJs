@@ -11,20 +11,12 @@ type FieldType = {
 };
 
 export default function Page() {
-  // const MyForm =() => {
   const [form] = useForm();
   const searchParams = useSearchParams();
   const searchUser = searchParams.get("username");
   const searchPass = searchParams.get("password");
-  //   form.setFieldsValue({
-  // username: searchUser,
-  // password: searchPass,
-  //   })
-  // }
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    // console.log("onFinish Values: ", values);
-    // console.log("formValue: ", form.getFieldsValue(true));
     if (values.username === "admin") {
       if (values.password === "123456") {
         openNotification("Login Success", "Hi admin");

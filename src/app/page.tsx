@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "antd";
-import { Router } from "next/router";
+// import { Router } from "next/router";
 
 function Page() {
   const router = useRouter();
@@ -12,7 +12,7 @@ function Page() {
       type="primary"
       className="loginbutton"
       id="Cilck"
-      onClick={() => router.push("/login?username=pasin&password=5678")}
+      onClick={() => router.push("/login?username=helloworld&password=67890")}
     >
       {" "}
       login{" "}
