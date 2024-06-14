@@ -4,6 +4,8 @@ import { massage } from "@/functions/info";
 import type { FormProps } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useSearchParams } from "next/navigation";
+import LoginBlock from "@/component/form/login.form";
+// import { use } from "react";
 
 type FieldType = {
   username?: string;
@@ -58,6 +60,9 @@ export default function Page() {
     username: searchUser,
     password: searchPass,
   });
+  const logUser = Form.useWatch('username',form);
+  const logPass = Form.useWatch('password',form);
+
   return (
     <main>
       <div className="flex-contain">
@@ -133,6 +138,7 @@ export default function Page() {
                   clear
                 </Button>
               </Popconfirm>
+              <LoginBlock username={logUser} password={logPass} />
             </Form.Item>
           </Form>
         </div>

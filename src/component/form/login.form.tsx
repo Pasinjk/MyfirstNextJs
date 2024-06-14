@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import { Input } from "antd";
 
-function LoginForm() {
+function LoginBlock({ username, password }: any) {
   return (
-    <div>LoginForm</div>
-  )
+    <main>
+      <Input placeholder="" value={username} />
+      <Input placeholder="" value={password} />
+    </main>
+  );
 }
 
-export default LoginForm
+export default LoginBlock;

@@ -1,6 +1,5 @@
+
 /// useSearchParams to recive value form id ///
-
-
 
 // "use client";
 // import { useSearchParams } from "next/navigation";
@@ -14,13 +13,7 @@
 //   return <>Search: {search}</>;
 // }
 
-
-
-
 /// Router link to next page ///
-
-
-
 
 // "use client";
 // import React from "react";
