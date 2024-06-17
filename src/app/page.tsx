@@ -26,10 +26,13 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { Button, notification, Popconfirm } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { massage } from "@/functions/info";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const loginButtonClick = () => {
@@ -53,6 +56,19 @@ export default function Page() {
       }
     }
   };
+  useEffect(() => {
+    if (password.length < 8) {
+      massage("Password must be at least 8 characters", "warning");
+    } else if (!/[a-z]/.test(password)) {
+      massage("Password should have at least one lowercase letter", "warning");
+    } else if (!/[A-Z]/.test(password)) {
+      massage("Password should have at least one uppercase letter", "warning");
+    } else if (!/[0-9]/.test(password)) {
+      massage("Password should have at least one number", "warning");
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      massage("Password should have at least one special character", "warning");
+    }
+  }, [password]);
 
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (massage: string) => {
@@ -60,9 +76,21 @@ export default function Page() {
       message: massage,
     });
   };
+  const createQueryString = (username: string, password: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(username, password);
+    return params.toString();
+  };
 
   const onButtonClick = () => {
     loginButtonClick();
+    router.push(
+      "/login" +
+        "?" +
+        createQueryString("username", username) +
+        "&" +
+        createQueryString("password", password)
+    );
   };
   const handleChangeUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);

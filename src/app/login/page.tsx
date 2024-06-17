@@ -5,7 +5,7 @@ import type { FormProps } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useSearchParams } from "next/navigation";
 import LoginBlock from "@/component/form/login.form";
-// import { use } from "react";
+// import { useRouter } from "next/navigation";
 
 type FieldType = {
   username?: string;
@@ -60,8 +60,8 @@ export default function Page() {
     username: searchUser,
     password: searchPass,
   });
-  const logUser = Form.useWatch('username',form);
-  const logPass = Form.useWatch('password',form);
+  const logUser = Form.useWatch("username", form);
+  const logPass = Form.useWatch("password", form);
 
   return (
     <main>
@@ -90,6 +90,7 @@ export default function Page() {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             className="loginFill"
+            onValuesChange={useForm}
           >
             <Form.Item
               label="Username"
