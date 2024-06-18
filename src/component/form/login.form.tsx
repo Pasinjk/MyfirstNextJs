@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "antd";
 
-function LoginBlock({ username, password }: any) {
+function LoginBlock({username,password}:any) {
   return (
     <main>
       <Input placeholder="" value={username} />

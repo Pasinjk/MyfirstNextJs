@@ -20,8 +20,8 @@ export default function Page() {
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     if (values.username === "admin") {
-      if (values.password === "123456") {
-        openNotification("Login Success", "Hi admin");
+      if (values.password === "Admin@123") {
+        openNotification("Login Success", "Hi admin!!");
       } else {
         openNotification(
           "Login Fail !!",
