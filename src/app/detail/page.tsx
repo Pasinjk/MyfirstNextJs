@@ -1,7 +1,6 @@
 "use client"
 import React from 'react';
 import { Button, Flex } from 'antd';
-import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
 import Link from 'next/link';
 
 

@@ -1,7 +1,6 @@
-"use client";
-import { useState } from "react";
+'use client'
+import React, { useState, useEffect } from "react";
 import instance from "@/lib/axios";
-import Item from "antd/es/list/Item";
 
 type userEmail = {
   id: number;
@@ -15,6 +14,11 @@ function Page() {
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     setLoading(true);
@@ -47,6 +51,20 @@ function Page() {
     } catch (error) {
       console.error("Error posting data:", error);
       setError("Error posting data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteUser = async (id: number) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await instance.delete(`/users/del/${id}`);
+      fetchData();
+    } catch (error) {
+      console.error("Error deleting data:", error);
+      setError("Error deleting data");
     } finally {
       setLoading(false);
     }
@@ -86,8 +104,31 @@ function Page() {
             required
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Add</button>
       </form>
+      <div>
+        <label>Select User Email:</label>
+        <select
+          value={selectedUserId ?? ""}
+          onChange={(e) => setSelectedUserId(Number(e.target.value))}
+        >
+          <option value="" disabled>Select a user email</option>
+          {user.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.email}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button
+        onClick={() => {
+          if (selectedUserId !== null) {
+            deleteUser(selectedUserId);
+          }
+        }}
+      >
+        Delete
+      </button>
     </main>
   );
 }
