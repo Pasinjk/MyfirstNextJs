@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import instance from "@/lib/axios";
 
@@ -26,6 +26,7 @@ function Page() {
     try {
       const response = await instance.get<userEmail[]>("/users");
       setUser(response.data);
+      // console.log("Fetched data:",response); show the data to the F12
     } catch (error) {
       console.error("Error fetching data:", error);
       setError("Error fetching data");
@@ -112,7 +113,9 @@ function Page() {
           value={selectedUserId ?? ""}
           onChange={(e) => setSelectedUserId(Number(e.target.value))}
         >
-          <option value="" disabled>Select a user email</option>
+          <option value="" disabled>
+            Select a user email
+          </option>
           {user.map((item) => (
             <option key={item.id} value={item.id}>
               {item.email}
