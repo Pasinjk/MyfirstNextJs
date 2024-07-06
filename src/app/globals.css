@@ -11,6 +11,7 @@ body {
   max-width: 100vw;
   height: 100vh;
   overflow-x: hidden;
+  background-color: rgba(244, 244, 244, 0.938);
 }
 
 .flex-contain{
@@ -29,16 +30,31 @@ body {
 }
 
 
-.container {
+.grid-container {
+  display: grid;
+  place-items: center; 
+  height: 100vh;      
+}
+
+.grid-items {
+  padding: 10px;
+  box-sizing: border-box;
   display: flex;
-  flex-flow: column wrap;
+  justify-content: center;
   align-items: center;
-  box-shadow: 0 0 5px 2px rgba(127, 125, 125, 0.35);
-  border-radius: 20px;
-  padding-top: 40px;
-  height: 350px;
-  width: 400px;
-  ;
+}
+
+.loginFill {
+  width: 100%;
+  max-width: 600px;        
+  background: white;        
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  border-radius: 15px;       
+}
+
+.username-item {
+  margin-top: 20px;
 }
 
 .nav {
@@ -47,12 +63,6 @@ body {
   padding: 10px;
 }
 
-.loginFill {
-  width: fit-content;
-  max-width: 50%;
-  margin: 20px;
-  font-size: small;
-}
 
 .button_login {
   width: fit-content;

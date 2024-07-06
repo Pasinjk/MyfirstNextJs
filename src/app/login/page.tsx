@@ -3,9 +3,10 @@ import { Button, Form, Input, notification, Popconfirm } from "antd";
 import { massage } from "@/functions/info";
 import type { FormProps } from "antd";
 import { useForm } from "antd/es/form/Form";
-import { useSearchParams } from "next/navigation";
-import LoginBlock from "@/component/form/login.form";
-// import { useRouter } from "next/navigation";
+import instance from "@/lib/axios";
+import { useRouter } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
+// import LoginBlock from "@/component/form/login.form";
 
 type FieldType = {
   username?: string;
@@ -14,63 +15,62 @@ type FieldType = {
 
 export default function Page() {
   const [form] = useForm();
-  const searchParams = useSearchParams();
-  const searchUser = searchParams.get("username");
-  const searchPass = searchParams.get("password");
+  const router = useRouter();
+  // const searchParams = useSearchParams();
+  // const searchUser = searchParams.get("username");
+  // const searchPass = searchParams.get("password");
+  const onFinish = async (values: FieldType) => {
+    try {
+      const response = await instance.post("http://127.0.0.1:8000/login/", {
+        username: values.username,
+        password: values.password,
+      });
 
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    if (values.username === "admin") {
-      if (values.password === "Admin@123") {
-        openNotification("Login Success", "Hi admin!!");
+      if (response.data === true) {
+        massage("Login Success", "success");
+        router.push('http://localhost:3000/detail')
       } else {
-        openNotification(
-          "Login Fail !!",
-          "Wrong password please fill the right password"
-        );
+        massage("Username or password isn't correct", "error");
       }
-    } else {
-      openNotification(
-        "Not Found Username",
-        "Wrong username please fill the right username"
-      );
+    } catch (error) {
+      console.error("Error during login:", error);
+      massage("Failed to login. Please try again later.", "error");
     }
   };
+  
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
     errorInfo
   ) => {
-    if (errorInfo.values.username === "" && errorInfo.values.password === "") {
+    if (!errorInfo.values.username && !errorInfo.values.password) {
       massage("Please fill username & password", "warning");
-    } else if (errorInfo.values.username === "") {
+    } else if (!errorInfo.values.username) {
       massage("Please fill username", "warning");
     } else {
       massage("Please fill password", "warning");
     }
   };
   const [api, contextHolder] = notification.useNotification();
-  const openNotification = (massage: string, desriptmassage: string) => {
+  const openNotification = (message: string, description: string) => {
     api.info({
-      message: massage,
-      description: desriptmassage,
+      message,
+      description,
     });
   };
   const clearInput = () => {
     form.resetFields();
   };
-  form.setFieldsValue({
-    username: searchUser,
-    password: searchPass,
-  });
-  const logUser = Form.useWatch("username", form);
-  const logPass = Form.useWatch("password", form);
+  // form.setFieldsValue({
+  // username: searchUser,
+  // password: searchPass,
+  // });
+  // const logUser = Form.useWatch("username", form);
+  // const logPass = Form.useWatch("password", form);
 
   return (
     <main>
-      <div className="flex-contain">
-        <div className="box"></div>
-        <div className="box"></div>
-        <div className="box"></div>
-        <div className="box"></div>
-        <div className="container">
+      {contextHolder}
+      <div className="grid-container">
+        <div className="grid-items">
           <Form
             form={form}
             name="basic"
@@ -90,7 +90,6 @@ export default function Page() {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             className="loginFill"
-            onValuesChange={useForm}
           >
             <Form.Item
               label="Username"
@@ -101,6 +100,7 @@ export default function Page() {
                   message: "Please input your username!",
                 },
               ]}
+              className="username-item"
             >
               <Input />
             </Form.Item>
@@ -125,7 +125,6 @@ export default function Page() {
               }}
             >
               <Button type="primary" htmlType="submit">
-                {contextHolder}
                 Submit
               </Button>
               <Popconfirm
@@ -136,18 +135,29 @@ export default function Page() {
                 cancelText="No"
               >
                 <Button danger className="clearbutton">
-                  clear
+                  Clear
                 </Button>
               </Popconfirm>
-              <LoginBlock username={logUser} password={logPass} />
             </Form.Item>
           </Form>
         </div>
-        <div className="box"></div>
-        <div className="box"></div>
-        <div className="box"></div>
-        <div className="box"></div>
       </div>
     </main>
   );
 }
+
+// if (values.username ===) {
+//   if (values.password ===) {
+//     openNotification("Login Success", "Hi admin!!");
+//   } else {
+//     openNotification(
+//       "Login Fail !!",
+//       "Wrong password, please fill the right password"
+//     );
+//   }
+// } else {
+//   openNotification(
+//     "Not Found Username",
+//     "Wrong username, please fill the right username"
+//   );
+// }
