@@ -35,7 +35,6 @@ export default function Page() {
   const searchParams = useSearchParams();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [passmassage, setpassMassage] = useState<string>("");
   const loginButtonClick = () => {
     const InputUsername = (
       document.getElementById("username") as HTMLInputElement
@@ -50,7 +49,7 @@ export default function Page() {
     } else if (InputPassword === "") {
       massage("please fill password", "warning");
     } else {
-      if (InputUsername === "admin" && InputPassword === "Admin@123")
+      if (InputUsername === "admin" && InputPassword === "123456")
         openNotification("Login Success");
       else {
         openNotification("Login Fail");
@@ -58,18 +57,16 @@ export default function Page() {
     }
   };
   useEffect(() => {
-    if (!/[A-Z]/.test(password)) {
-      setpassMassage("Password should have at least one uppercase letter");
+    if (password.length < 8) {
+      massage("Password must be at least 8 characters", "warning");
     } else if (!/[a-z]/.test(password)) {
-      setpassMassage("Password should have at least one lowercase letter");
+      massage("Password should have at least one lowercase letter", "warning");
+    } else if (!/[A-Z]/.test(password)) {
+      massage("Password should have at least one uppercase letter", "warning");
     } else if (!/[0-9]/.test(password)) {
-      setpassMassage("Password should have at least one number");
+      massage("Password should have at least one number", "warning");
     } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      setpassMassage("Password should have at least one special character");
-    } else if (password.length < 8) {
-      setpassMassage("Password must be at least 8 characters");
-    } else{
-      setpassMassage("");
+      massage("Password should have at least one special character", "warning");
     }
   }, [password]);
 
@@ -86,17 +83,14 @@ export default function Page() {
   };
 
   const onButtonClick = () => {
-    if (username === "admin" && password === "Admin@123") {
-      router.push(
-        `/login` +
-          "?" +
-          createQueryString("username", username) +
-          "&" +
-          createQueryString("password", password)
-      );
-    } else {
-      loginButtonClick();
-    }
+    loginButtonClick();
+    router.push(
+      "/login" +
+        "?" +
+        createQueryString("username", username) +
+        "&" +
+        createQueryString("password", password)
+    );
   };
   const handleChangeUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -137,7 +131,6 @@ export default function Page() {
               placeholder="password"
               onChange={handleChangePass}
             />
-            {passmassage && <p>{passmassage}</p>}
             <a href="/register" className="pass_forget">
               Forget password??
             </a>
@@ -145,7 +138,7 @@ export default function Page() {
           <div className="button_login">
             {contextHolder}
             <Popconfirm
-              title="Clear All"
+              title="Clear All/"
               description="Are you sure to clear all?"
               onConfirm={clearInput}
               okText="Yes"
